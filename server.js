@@ -12,7 +12,7 @@ async function initializeServer() {
     const { default: fetch } = await import('node-fetch');
 
     const app = express();
-    const upload = multer({ dest: 'uploads/' });
+    const upload = multer({ dest: 'uploads/' }); // Dosyaların kaydedileceği klasörü belirtin
 
     const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
 
