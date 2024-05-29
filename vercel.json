@@ -1,7 +1,6 @@
 {
     "functions": {
       "api": {
-        "handler": "server.js",
         "methods": ["POST"],
         "src": "/upload"
       }
