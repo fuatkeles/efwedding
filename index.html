@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Photo to Dropbox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            border-radius: 8px;
+            background-color: white;
+            padding: 15px;
+            padding-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container img {
+            max-width: 450px;
+            max-height: 80%;
+            border-radius: 6px;
+        }
+
+        #uploadForm {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Dosya yükleme butonunun görünümünü özelleştir */
+        #fileInput {
+            color: transparent;
+            width: 0.1px;
+            height: 0.1px;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        #fileInput + label {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #fileInput:focus + label {
+            outline: 1px solid blue;
+        }
+
+        #uploadForm input[type="submit"] {
+            background-color: black;
+            color: white;
+            margin-top: 10px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Mobile Responsive Styles */
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .container img {
+                max-width: 100%;
+                max-height: auto;
+            }
+
+            #uploadForm {
+                margin-top: 10px;
+            }
+
+            #fileInput + label {
+                padding: 8px 16px;
+            }
+
+            #uploadForm input[type="submit"] {
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="/weddingphoto.jpeg" alt="">
+        <h1>ANILARINIZI PAYLAŞIN</h1>
+        <form id="uploadForm">
+            <!-- Dosya yükleme butonu -->
+            <input type="file" id="fileInput" name="file">
+            <label for="fileInput">Dosya Seç</label>
+            <!-- Yükle butonu -->
+            <input type="submit" value="Upload">
+        </form>
+    
+    </div>
+   
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file to upload.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                
+            });
+        });
+    </script>
+</body>
+</html>
+
