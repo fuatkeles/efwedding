@@ -122,18 +122,18 @@
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
     
-            fetch('https://efwedding.vercel.app/', { // Vercel URL'si burada kullanılıyor
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+            fetch('https://efwedding.vercel.app/upload', { // Doğru rotaya yönlendirme
+    method: 'POST',
+    body: formData
+})
+.then(response => response.text())
+.then(data => {
+    alert(data);
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+
     </script>
     
 </body>
