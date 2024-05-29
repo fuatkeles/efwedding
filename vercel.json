@@ -1,11 +1,9 @@
 {
     "functions": {
       "api": {
-        "routes": {
-          "/upload": {
-            "method": "POST"
-          }
-        }
+        "handler": "server.js",
+        "methods": ["POST"],
+        "src": "/upload"
       }
     }
   }
