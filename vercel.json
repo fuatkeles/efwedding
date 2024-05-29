@@ -1,0 +1,6 @@
+{
+    "routes": [
+      { "src": "/api/upload", "dest": "server.js" }
+    ]
+  }
+  
