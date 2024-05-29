@@ -20,7 +20,7 @@ async function initializeServer() {
 
     app.use(express.static(path.join(__dirname, 'public')));
 
-    app.post('/upload', upload.single('file'), (req, res) => {
+    app.post('/api/upload', upload.single('file'), (req, res) => {
         const file = req.file;
         const filePath = `/${file.originalname}`;
 
