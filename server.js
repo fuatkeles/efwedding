@@ -21,12 +21,12 @@ async function initializeServer() {
     app.post('/upload', upload.single('file'), (req, res) => {
         const file = req.file;
         const filePath = `/${file.originalname}`;
-
+    
         fs.readFile(file.path, (err, contents) => {
             if (err) {
                 return res.status(500).send('File reading error');
             }
-
+    
             dbx.filesUpload({ path: filePath, contents: contents })
                 .then(response => {
                     fs.unlinkSync(file.path); // Upload işleminden sonra dosyayı sunucudan sil
@@ -37,7 +37,7 @@ async function initializeServer() {
                 });
         });
     });
-
+    
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
