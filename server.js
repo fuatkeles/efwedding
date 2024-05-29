@@ -20,24 +20,21 @@ async function initializeServer() {
 
     app.use(express.static(path.join(__dirname, 'public')));
 
-    app.post('/api/upload', upload.single('file'), (req, res) => {
-        const file = req.file;
-        const filePath = `/${file.originalname}`;
+    app.post('/api/upload', upload.single('file'), async (req, res) => {
+        try {
+            const file = req.file;
+            const filePath = `/${file.originalname}`;
 
-        fs.readFile(file.path, (err, contents) => {
-            if (err) {
-                return res.status(500).send('File reading error');
-            }
+            const contents = fs.readFileSync(file.path);
 
-            dbx.filesUpload({ path: filePath, contents: contents })
-                .then(response => {
-                    fs.unlinkSync(file.path); // Upload işleminden sonra dosyayı sunucudan sil
-                    res.status(200).send('File successfully uploaded to Dropbox');
-                })
-                .catch(err => {
-                    res.status(500).send('Error uploading to Dropbox');
-                });
-        });
+            await dbx.filesUpload({ path: filePath, contents: contents });
+
+            fs.unlinkSync(file.path);
+
+            res.status(200).send('File successfully uploaded to Dropbox');
+        } catch (err) {
+            res.status(500).send('Error uploading to Dropbox');
+        }
     });
 
     const PORT = process.env.PORT || 3000;
