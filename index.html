@@ -122,7 +122,7 @@
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
     
-            fetch('https://efwedding.vercel.app/upload', { // Doğru rotaya yönlendirme
+            fetch('https://efwedding.vercel.app/api/upload', { // Doğru rotaya yönlendirme
     method: 'POST',
     body: formData
 })
